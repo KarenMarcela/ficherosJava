@@ -5,34 +5,47 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.Writer;
-import java.util.ArrayList;
 import java.util.List;
 
+//Co
 public class WhiterFile {
-//        public static void whiterInFile(String list) throws IOException{
-//        try (FileWriter writer = new FileWriter(list)) {
-//            for (int i = 0; i < 10; i++) {
-//                System.out.println("Línea: " + (i + 1));
-//            }
-//            System.out.println("Contenido agregado al archivo.");
-//            
-//        }
-//       
-//    }
-    private File file;
-    private FileWriter fileWriter; //Para escribir
-    private BufferedWriter bufferedReader;
+     private File file;
 
-    public WhiterFile(File file) throws IOException {
+    public WhiterFile(File file) {
         this.file = file;
-        this.fileWriter = new FileWriter(file);
-        this.bufferedReader = new BufferedWriter(fileWriter);
+    }
+
+    
+    
+    public void writerData (List <String> data) throws IOException{
         
+        FileWriter fileWriter = null;
+        BufferedWriter bufferedWriter = null;
+        try{
+            fileWriter = new FileWriter(file);
+            bufferedWriter = new BufferedWriter (fileWriter);
+            
+            for(String line : data){
+                bufferedWriter.write(line);
+                bufferedWriter.newLine();
+            }
+        }catch(IOException e){
+            System.out.println("Error al escribir en el archivo: "+e.getMessage());
+            e.printStackTrace();
+        }finally{
+            try{
+                if(bufferedWriter != null){
+                    bufferedWriter.close();
+                }
+                if (fileWriter != null) {
+                    fileWriter.close();
+                }   
+                
+            }catch(IOException e2){
+                System.out.println("Error al cerrar el archivo despues de escribir: "+e2.getMessage());
+                e2.printStackTrace();
+            }
+        }
     }
-    public List<String> whiterData(){
-        String line = null;
-        List<String > data = new ArrayList<>();
-        return data;
-    }
+    
 }

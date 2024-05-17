@@ -20,8 +20,13 @@ public class ReadFile {
 
     public ReadFile(File file) throws FileNotFoundException { //Solo del file porque el reader y el buffer se crea cuandos se haga la instancia
         this.file = file;
-        this.fileReader = new FileReader(file); //se debe informar de la excepcion porque esta tarea probablemente genere excepciones
-        this.bufferedReader = new BufferedReader(fileReader);
+        try{
+            this.fileReader = new FileReader(file); //se debe informar de la excepcion porque esta tarea probablemente genere excepciones
+            this.bufferedReader = new BufferedReader(fileReader);
+        }catch(Exception e){
+            System.out.println("Archivo no encontrado "+e.getMessage());
+            e.printStackTrace(); // Imprime el stack trace del FileNotFoundException
+        }
         //TAREA: Capturar la excepcion
     }
     
@@ -42,7 +47,8 @@ public class ReadFile {
                     fileReader.close();
                 }
             }catch(IOException e2){
-                
+                System.out.println("Error al cerrar el archivo: "+e2.getMessage());
+                e2.printStackTrace();
             }
         }
         
