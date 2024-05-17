@@ -1,10 +1,10 @@
 
 package com.mycompany.csvfiles.manageFile;
 
-import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.List;
 
 //Co
@@ -15,27 +15,26 @@ public class WhiterFile {
         this.file = file;
     }
 
-    
-    
     public void writerData (List <String> data) throws IOException{
         
         FileWriter fileWriter = null;
-        BufferedWriter bufferedWriter = null;
+        PrintWriter printWriter = null;
         try{
-            fileWriter = new FileWriter(file);
-            bufferedWriter = new BufferedWriter (fileWriter);
+            fileWriter = new FileWriter(file,false); //Se le pone true para que escriba despues del contenido que tengamos
+            //si quisieramos que escribiera desde el inicio o desde cero, habria que poner false en vez de true
+            printWriter = new PrintWriter (fileWriter);
             
             for(String line : data){
-                bufferedWriter.write(line);
-                bufferedWriter.newLine();
+                printWriter.write(line);
+                printWriter.println();
             }
         }catch(IOException e){
             System.out.println("Error al escribir en el archivo: "+e.getMessage());
             e.printStackTrace();
         }finally{
             try{
-                if(bufferedWriter != null){
-                    bufferedWriter.close();
+                if(printWriter != null){
+                    printWriter.close();
                 }
                 if (fileWriter != null) {
                     fileWriter.close();
